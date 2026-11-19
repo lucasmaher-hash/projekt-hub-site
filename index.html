@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="referrer" content="no-referrer">
+<title>Projekte & Ziele</title>
+<style>
+:root{--bg:#f2f2f7;--surface:#fff;--well:#f7f7f9;--ink:#1d1d1f;--muted:#727278;--line:#e5e5ea;--accent:#007aff;--green:#278347;--orange:#b7791f;--radius:14px;--font:-apple-system,BlinkMacSystemFont,system-ui,"Segoe UI",sans-serif;color-scheme:light}
+@media(prefers-color-scheme:dark){:root{--bg:#101012;--surface:#1c1c1e;--well:#242426;--ink:#f5f5f7;--muted:#a1a1a6;--line:#353538;--accent:#66a9ff;--green:#75ce8e;--orange:#e6b65e;color-scheme:dark}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:100px}body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 var(--font);-webkit-font-smoothing:antialiased}button,input,select{font:inherit}button,a,summary,select{-webkit-tap-highlight-color:transparent}button{color:inherit}button,summary{cursor:pointer}button:disabled,select:disabled{cursor:wait;opacity:.5}a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}button:focus-visible,a:focus-visible,summary:focus-visible,select:focus-visible{outline:3px solid var(--accent);outline-offset:4px}button{border:0}svg{display:block;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}h1,h2,h3,p{margin:0}h1{font-size:32px;letter-spacing:-1px;line-height:1.2;font-weight:650}h2{font-size:22px;letter-spacing:-.4px;font-weight:650}h3{font-size:17px;font-weight:600}main,.top-inner,.nav-inner{max-width:1120px;margin:auto}main{padding:12px 24px 88px}.top-inner{padding:42px 24px 22px;display:flex;align-items:center;justify-content:space-between;gap:24px}.date{font-size:14px;color:var(--muted);margin-top:8px}.top-actions{display:flex;align-items:center;gap:12px}.save-state{color:var(--muted);font-size:13px;display:flex;align-items:center;gap:7px;white-space:nowrap}.save-state:before{content:"";width:6px;height:6px;background:currentColor;border-radius:50%}.save-state[data-state="saved"]:before{background:var(--green)}.save-state[data-state="error"]{color:var(--orange)}.icon-button{width:40px;height:40px;display:grid;place-items:center;border-radius:10px;background:var(--surface);border:1px solid var(--line)}.icon-button:hover{background:var(--well)}.icon-button svg{width:18px;height:18px}.nav{position:sticky;top:0;z-index:10;background:var(--bg);border-bottom:1px solid var(--line)}.nav-inner{padding:0 24px;display:flex;gap:24px}.nav a{display:block;color:var(--muted);font-size:15px;padding:12px 0;border-bottom:2px solid transparent;margin-bottom:-1px}.nav a:hover{text-decoration:none;color:var(--ink)}.nav a[aria-current="location"]{color:var(--ink);border-color:var(--ink)}section{padding-top:34px}.section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}.count{font-size:14px;color:var(--muted);font-variant-numeric:tabular-nums}.project{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}.project>summary,.exercise>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:20px}.project>summary::-webkit-details-marker,.exercise>summary::-webkit-details-marker{display:none}.project>summary{padding:18px 20px;font-size:17px;font-weight:550}.chevron{width:16px;height:16px;color:var(--muted);flex:none;transition:transform .18s ease}.project[open]>summary .chevron,.exercise[open]>summary .chevron{transform:rotate(90deg)}.project[open]>summary{border-bottom:1px solid var(--line)}.board{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:18px;background:var(--surface)}.column{min-height:150px;background:var(--well);border:1px solid transparent;border-radius:10px;padding:12px;transition:border-color .15s,background .15s}.column.drag-target{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 7%,var(--surface))}.column-head{display:flex;align-items:center;gap:8px;margin:0 2px 12px;font-size:13px;font-weight:600;color:var(--muted)}.column-head .dot{width:6px;height:6px;border-radius:50%;background:var(--line)}.column[data-dropstatus="progress"] .dot{background:var(--orange)}.column[data-dropstatus="done"] .dot{background:var(--green)}.column-count{margin-left:auto;font-size:12px;font-weight:400;font-variant-numeric:tabular-nums}.task{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:8px;margin-top:8px;display:flex;align-items:flex-start;min-height:64px;cursor:grab;touch-action:pan-y}.task:hover{border-color:color-mix(in srgb,var(--muted) 50%,var(--line))}.task[aria-busy="true"]{opacity:.55;cursor:wait}.task.dragging{opacity:.35}.task-title{padding:13px 14px;font-size:14px;line-height:1.5;flex:1;min-width:0;overflow-wrap:anywhere}.project-progress{padding:0 20px 17px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.finished-label{font-size:15px;font-weight:550;color:var(--muted);margin:24px 0 12px}.finished-label:before{content:"✓";margin-right:8px}.values{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:18px}.values-label{font-size:13px;color:var(--muted);margin-right:4px}.value{font-size:13px;border:1px solid var(--line);border-radius:999px;padding:5px 12px}.goal-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.goal-group{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);min-height:268px;overflow:hidden}.goal-head{padding:19px 20px 15px;border-bottom:1px solid var(--line)}.goal-head span{display:block;font-size:12px;color:var(--muted);margin-top:2px}.goal{padding:15px 20px;font-size:15px;display:flex;justify-content:space-between;align-items:center;gap:14px;min-height:56px;color:var(--ink)}.goal+.goal{border-top:1px solid var(--line)}.exercise-list{border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface)}.exercise+.exercise{border-top:1px solid var(--line)}.exercise>summary{padding:18px 20px;font-size:16px;font-weight:500}.exercise-content{padding:0 24px 22px}.questions{margin:0;padding:0 0 0 20px;max-width:65ch}.questions li{padding:7px 0 7px 4px;font-size:15px}.source{display:inline-block;font-size:12px;color:var(--muted);margin-top:16px}.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);z-index:30;max-width:calc(100% - 32px);padding:13px 18px;border-radius:12px;background:var(--ink);color:var(--surface);font-size:14px;box-shadow:0 4px 24px #0002}.toast[hidden],[hidden]{display:none!important}.login{max-width:360px;margin:12vh auto 0;padding:28px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius)}.login h2{margin-bottom:24px}.login label{font-size:14px;display:block;margin-top:15px}.login input{display:block;width:100%;margin-top:6px;background:var(--well);border:1px solid var(--line);border-radius:8px;color:var(--ink);padding:11px 12px;font-size:16px}.primary{background:var(--ink);color:var(--surface);border-radius:8px;padding:11px 16px;width:100%;margin-top:22px;font-size:15px;font-weight:550}.login-error{font-size:14px;color:var(--orange);margin-top:14px}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:760px){.top-inner{padding:30px 20px 20px;align-items:flex-start}.top-actions{gap:6px;flex-wrap:wrap;justify-content:flex-end;max-width:160px}.save-state{order:3;flex-basis:100%;justify-content:flex-end;font-size:11px;margin-top:3px}h1{font-size:27px}.nav-inner{padding:0 20px;gap:26px}main{padding:6px 16px 60px}.board{grid-template-columns:1fr;padding:12px;gap:10px}.column{min-height:66px}.column-head{margin-bottom:6px}.task-title{font-size:15px}.goal-grid{grid-template-columns:1fr}.goal-group{min-height:0}.goal-group:last-child:has(.goal-list:empty){min-height:100px}.project>summary{padding:17px 18px}.section-head{margin-bottom:14px}section{padding-top:30px}.date{font-size:12px;margin-top:6px}.icon-button{width:36px;height:36px}.values{gap:7px}.value{font-size:12px;padding:5px 10px}}
+/* Section accents and status colors share one restrained palette. */
+:root{--todo:#526fa9;--doing:#9b6b25;--done:#3d8067}
+@media(prefers-color-scheme:dark){:root{--todo:#9ab9f0;--doing:#e4bb78;--done:#8dceb2}}
+#projekte{--section-accent:var(--todo)}#ziele{--section-accent:var(--doing)}#reflexion{--section-accent:var(--done)}
+.section-head{padding-bottom:12px;border-bottom:1px solid color-mix(in srgb,var(--section-accent) 22%,transparent)}.section-head h2{color:var(--section-accent)}
+.nav a[href="#projekte"][aria-current="location"]{color:var(--todo);border-color:var(--todo)}.nav a[href="#ziele"][aria-current="location"]{color:var(--doing);border-color:var(--doing)}.nav a[href="#reflexion"][aria-current="location"]{color:var(--done);border-color:var(--done)}
+.project{border-color:color-mix(in srgb,var(--todo) 17%,var(--surface));border-radius:16px}.project>summary{background:color-mix(in srgb,var(--todo) 3%,var(--surface))}.project[open]>summary{background:color-mix(in srgb,var(--todo) 5%,var(--surface));border-bottom-color:color-mix(in srgb,var(--todo) 14%,var(--surface))}.project>summary:hover{background:color-mix(in srgb,var(--todo) 7%,var(--surface))}
+.board{gap:16px;padding:18px}.column{--status:var(--todo);padding:14px;background:color-mix(in srgb,var(--status) 9%,var(--surface));border:1px solid color-mix(in srgb,var(--status) 15%,var(--surface));border-radius:14px}.column[data-dropstatus="progress"]{--status:var(--doing)}.column[data-dropstatus="done"]{--status:var(--done)}
+.column-head{color:var(--status);font-weight:650;margin-bottom:14px}.column .column-head .dot{width:7px;height:7px;background:var(--status)}.column-count{min-width:24px;padding:2px 7px;text-align:center;border-radius:6px;background:color-mix(in srgb,var(--status) 12%,var(--surface));font-weight:600}
+.task{min-height:72px;margin-top:10px;border:1px solid color-mix(in srgb,var(--status) 20%,var(--surface));border-left:3px solid color-mix(in srgb,var(--status) 65%,var(--surface));border-radius:11px;box-shadow:0 2px 5px #18284206;transition:box-shadow .18s,border-color .18s,transform .18s}.task:hover{border-color:color-mix(in srgb,var(--status) 55%,var(--surface));box-shadow:0 4px 12px color-mix(in srgb,var(--status) 13%,transparent);transform:translateY(-1px)}.task:active{cursor:grabbing}.task-title{padding:15px 14px;font-weight:500}
+.column.drag-target{border-color:var(--status);background:color-mix(in srgb,var(--status) 18%,var(--surface))}.finished-label{color:var(--done)}
+.value{color:var(--doing);border-color:color-mix(in srgb,var(--doing) 23%,var(--surface));background:color-mix(in srgb,var(--doing) 5%,var(--surface))}.goal-group{border-color:color-mix(in srgb,var(--doing) 19%,var(--surface));border-top:3px solid color-mix(in srgb,var(--doing) 60%,var(--surface));border-radius:14px}.goal-head{background:color-mix(in srgb,var(--doing) 5%,var(--surface));border-bottom-color:color-mix(in srgb,var(--doing) 16%,var(--surface))}.goal-head h3,.goal+.goal{border-top-color:color-mix(in srgb,var(--doing) 13%,var(--surface))}
+.exercise-list{border-color:color-mix(in srgb,var(--done) 20%,var(--surface))}.exercise+.exercise{border-top-color:color-mix(in srgb,var(--done) 16%,var(--surface))}.exercise>summary{background:color-mix(in srgb,var(--done) 3%,var(--surface))}.exercise>summary:hover,.exercise[open]>summary{background:color-mix(in srgb,var(--done) 7%,var(--surface))}.exercise .chevron,.source{color:var(--done)}.exercise-content{padding-top:12px}
+@media(max-width:760px){.board{padding:12px;gap:10px}.column{padding:12px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<header><div class="top-inner"><div><h1>Projekte & Ziele</h1><p class="date" id="document-date"></p></div><div class="top-actions"><span class="save-state" id="save-state" role="status" aria-live="polite"></span><button class="icon-button" id="export-button" type="button" title="HTML sichern" aria-label="Aktuellen Stand als HTML sichern" hidden><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg></button><button class="icon-button" id="logout-button" type="button" title="Abmelden" aria-label="Abmelden" hidden><svg viewBox="0 0 24 24"><path d="M9 4H4v16h5m5-13 5 5-5 5m-6-5h11"/></svg></button></div></div></header>
+<nav class="nav" id="navigation" aria-label="Bereiche" hidden><div class="nav-inner"><a href="#projekte" aria-current="location">Projekte</a><a href="#ziele">Ziele</a><a href="#reflexion">Reflexion</a></div></nav>
+<main>
+<form class="login" id="login-form" hidden><h2>Anmelden</h2><label for="email">E-Mail<input id="email" name="email" type="email" autocomplete="username" required></label><label for="password">Passwort<input id="password" name="password" type="password" autocomplete="current-password" required></label><button class="primary" type="submit">Anmelden</button><p class="login-error" id="login-error" role="alert" hidden></p></form>
+<div id="hub" hidden><section id="projekte" aria-labelledby="projects-title"><div class="section-head"><h2 id="projects-title">Projekte</h2><span class="count" id="project-count"></span></div><div id="active-projects"></div><div id="finished-group" hidden><h3 class="finished-label">Abgeschlossen</h3><div id="finished-projects"></div></div></section>
+<section id="ziele" aria-labelledby="goals-title"><div class="section-head"><h2 id="goals-title">Ziele</h2></div><div class="values" id="values"></div><div class="goal-grid" id="goals"></div></section>
+<section id="reflexion" aria-labelledby="reflection-title"><div class="section-head"><h2 id="reflection-title">Reflexion</h2></div><div class="exercise-list" id="exercises"></div></section></div>
+</main>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<script id="cloud-config" type="application/json">{"url": "https://vmpdcmkprpuwzazcqboy.supabase.co", "key": "sb_publishable_2AL5v6Ef17e-NKyobVZ_Og_EjCmEBuF"}</script>
+<script id="hub-data" type="application/json">null</script>
+<script id="hub-core">
+const HubCore = (() => {
+  const statuses = {todo:'To Do',progress:'In Progress',done:'Done'};
+  const escape = value => String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const statusOf = (task, overrides) => Object.hasOwn(statuses,overrides[task.id]) ? overrides[task.id] : task.status;
+  const complete = (project, overrides) => project.tasks.length > 0 && project.tasks.every(task => statusOf(task,overrides)==='done');
+  const split = (projects,overrides) => ({active:projects.filter(p=>!complete(p,overrides)),done:projects.filter(p=>complete(p,overrides))});
+  const sanitize = (document, raw) => Object.fromEntries(document.projects.flatMap(p=>p.tasks).filter(t=>raw && Object.hasOwn(statuses,raw[t.id])).map(t=>[t.id,raw[t.id]]));
+  const snapshot = (document, overrides) => ({...document,projects:document.projects.map(p=>({...p,tasks:p.tasks.map(t=>({...t,status:statusOf(t,overrides)}))}))});
+  return {statuses,escape,statusOf,complete,split,sanitize,snapshot};
+})();
+</script>
+<script id="hub-app">
+(() => {
+  'use strict';
+  const originalHTML = '<!doctype html>\n'+document.documentElement.outerHTML;
+  const $ = id => document.getElementById(id);
+  const config = JSON.parse($('cloud-config').textContent);
+  const cloud = Boolean(config.url && config.key);
+  const namespace = cloud ? 'project-hub:'+config.url : 'project-hub:local:'+(config.localId||'v1');
+  const sessionKey=namespace+':auth', statusKey=namespace+':status', openKey=namespace+':open';
+  let doc=null, overrides={}, openStates={}, session=null, refreshPromise=null, pollBusy=false, renderAfterDrag=false, dragging=false, toastTimer, authEpoch=0;
+  const pending=new Set();
+  const E=HubCore.escape, statuses=HubCore.statuses;
+  const arrow='<svg class="chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg>';
+  let storageOK=true;
+  function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
+  function write(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{storageOK=false;return false}}
+  function setState(text,state=''){ $('save-state').textContent=text;$('save-state').dataset.state=state; }
+  function toast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,6000)}
+  function saved(){setState(cloud?'Synchronisiert':storageOK?'Lokal gespeichert':'Nur in dieser Sitzung',storageOK?'saved':'error')}
+  function showHub(){ $('hub').hidden=false;$('navigation').hidden=false;$('login-form').hidden=true;$('export-button').hidden=false;$('logout-button').hidden=!cloud; }
+  function showLogin(message=''){authEpoch++;doc=null;overrides={};session=null;pending.clear();try{localStorage.removeItem(sessionKey)}catch{};$('hub').hidden=true;$('navigation').hidden=true;$('export-button').hidden=true;$('logout-button').hidden=true;$('active-projects').replaceChildren();$('finished-projects').replaceChildren();$('goals').replaceChildren();$('values').replaceChildren();$('exercises').replaceChildren();$('document-date').textContent='';$('login-form').hidden=false;$('login-error').hidden=!message;$('login-error').textContent=message;setState('');}
+  function renderBoard(project){
+    const done=project.tasks.filter(t=>HubCore.statusOf(t,overrides)==='done').length;
+    return `<details class="project" id="project-${E(project.id)}" data-project="${E(project.id)}" ${openStates[project.id]?'open':''}><summary><span>${E(project.name)}</span>${arrow}</summary><div class="board">${Object.entries(statuses).map(([status,label])=>{
+      const tasks=project.tasks.filter(t=>HubCore.statusOf(t,overrides)===status);
+      return `<div class="column" data-dropstatus="${status}" data-project-id="${E(project.id)}"><div class="column-head"><span class="dot" aria-hidden="true"></span>${label}<span class="column-count">${tasks.length}</span></div>${tasks.map(t=>`<article class="task" draggable="${!pending.has(t.id)}" data-task="${E(t.id)}" aria-busy="${pending.has(t.id)}"><span class="task-title">${E(t.title)}</span></article>`).join('')}</div>`;
+    }).join('')}</div>${project.tasks.length?`<p class="project-progress">${done} von ${project.tasks.length} erledigt</p>`:''}</details>`;
+  }
+  function renderProjects(){
+    if(dragging){renderAfterDrag=true;return}
+    const groups=HubCore.split(doc.projects,overrides);
+    $('active-projects').innerHTML=groups.active.map(renderBoard).join('');$('finished-projects').innerHTML=groups.done.map(renderBoard).join('');$('finished-group').hidden=!groups.done.length;
+    $('project-count').textContent=doc.projects.length+' Projekte';
+    document.querySelectorAll('.project').forEach(details=>details.addEventListener('toggle',()=>{if(details.isConnected){openStates[details.dataset.project]=details.open;write(openKey,openStates)}}));
+  }
+  function renderContent(){
+    if(!Object.keys(openStates).length&&doc.projects[0])openStates[doc.projects[0].id]=true;
+    $('document-date').textContent='Stand: '+new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long',year:'numeric'}).format(new Date(doc.updated+'T12:00:00'));
+    $('values').innerHTML='<span class="values-label">Werte</span>'+doc.values.map(v=>`<span class="value">${E(v)}</span>`).join('');
+    $('goals').innerHTML=doc.horizons.map(h=>`<div class="goal-group"><div class="goal-head"><h3>${E(h.name)}</h3><span>${E(h.label)}</span></div><div class="goal-list">${h.goals.map(g=>`<div class="goal"><span>${E(g.title)}</span></div>`).join('')}</div></div>`).join('');
+    $('exercises').innerHTML=doc.exercises.map(x=>`<details class="exercise"><summary><span>${E(x.name)}</span>${arrow}</summary><div class="exercise-content"><ol class="questions">${x.questions.map(q=>`<li>${E(q)}</li>`).join('')}</ol><a class="source" href="${E(x.url)}" target="_blank" rel="noopener noreferrer">${E(x.source)} ↗</a></div></details>`).join('');
+    renderProjects();showHub();openHash();
+  }
+  function adoptSession(value){session={access_token:value.access_token,refresh_token:value.refresh_token,expires_at:value.expires_at||Math.floor(Date.now()/1000)+value.expires_in};write(sessionKey,session)}
+  async function tokenRequest(type,body){
+    const response=await fetch(config.url+'/auth/v1/token?grant_type='+type,{method:'POST',headers:{'Content-Type':'application/json',apikey:config.key},body:JSON.stringify(body)});
+    if(!response.ok){const error=new Error('Anmeldung fehlgeschlagen');error.status=response.status;throw error}return response.json();
+  }
+  async function ensureSession(){
+    if(!session)throw new Error('Bitte erneut anmelden.');
+    if(session.expires_at*1000>Date.now()+60000)return;
+    if(refreshPromise)return refreshPromise;
+    const refresh=async()=>{
+      session=read(sessionKey,session);
+      if(session.expires_at*1000>Date.now()+60000)return;
+      const epoch=authEpoch;
+      try{const next=await tokenRequest('refresh_token',{refresh_token:session.refresh_token});if(epoch!==authEpoch)throw new Error('Abgemeldet.');adoptSession(next)}
+      catch(error){if(error.status===400||error.status===401){showLogin('Bitte erneut anmelden.')}throw error}
+    };
+    refreshPromise=(navigator.locks?navigator.locks.request(namespace+':refresh',refresh):refresh()).finally(()=>refreshPromise=null);
+    return refreshPromise;
+  }
+  async function api(path,options={}){
+    await ensureSession();
+    const response=await fetch(config.url+'/rest/v1/'+path,{...options,headers:{apikey:config.key,Authorization:'Bearer '+session.access_token,'Content-Type':'application/json',Prefer:'return=representation',...options.headers},cache:'no-store'});
+    if(response.status===401){showLogin('Bitte erneut anmelden.');throw new Error('Bitte erneut anmelden.')}
+    if(!response.ok)throw new Error('Speichern nicht möglich.');
+    return response.json();
+  }
+  async function fetchCloud(){
+    const [documents,rows]=await Promise.all([api('hub_content?select=document'),api('hub_tasks?select=id,status')]);
+    if(!documents[0]?.document)throw new Error('Noch keine Inhalte verfügbar.');
+    return {document:documents[0].document,status:HubCore.sanitize(documents[0].document,Object.fromEntries(rows.map(r=>[r.id,r.status])))};
+  }
+  async function sync(){
+    if(!cloud||!session||pending.size||pollBusy||document.hidden)return;
+    pollBusy=true;const epoch=authEpoch;
+    try{
+      const next=await fetchCloud();
+      if(pending.size||epoch!==authEpoch||!session)return;
+      const contentChanged=JSON.stringify(next.document)!==JSON.stringify(doc),changed=JSON.stringify(next.status)!==JSON.stringify(overrides);
+      doc=next.document;overrides=next.status;
+      if(contentChanged)renderContent();else if(changed)renderProjects();
+      saved();
+    }catch{if(session&&epoch===authEpoch)setState(navigator.onLine?'Abgleich nicht möglich':'Offline','error')}
+    finally{pollBusy=false}
+  }
+  async function moveTask(id,status){
+    if(!doc||!Object.hasOwn(statuses,status)||pending.has(id))return;
+    const task=doc.projects.flatMap(p=>p.tasks).find(t=>t.id===id);if(!task)return;
+    const before=HubCore.statusOf(task,overrides);if(before===status)return;
+    overrides[id]=status;
+    if(!cloud){write(statusKey,overrides);saved();renderProjects();if(!storageOK)toast('Browser-Speicherung nicht verfügbar. Bitte HTML sichern.');return}
+    const epoch=authEpoch;pending.add(id);setState('Wird gespeichert …');renderProjects();
+    try{
+      const rows=await api('hub_tasks?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status})});
+      if(epoch!==authEpoch)return;
+      if(rows.length!==1)throw new Error('Aufgabe nicht gespeichert.');
+      overrides[id]=rows[0].status;saved();
+    }catch{if(epoch===authEpoch){overrides[id]=before;setState('Nicht gespeichert','error');toast('Änderung nicht gespeichert. Bitte erneut versuchen.')}}
+    finally{if(epoch===authEpoch){pending.delete(id);if(pending.size)setState('Wird gespeichert …');if(doc)renderProjects()}}
+  }
+  function openHash(){
+    const id=decodeURIComponent(location.hash.slice(1));if(!id.startsWith('project-'))return;
+    const project=$(id);if(project){project.open=true;requestAnimationFrame(()=>project.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}))}
+  }
+  document.addEventListener('dragstart',event=>{
+    const task=event.target.closest('.task');if(!task||pending.has(task.dataset.task))return;
+    dragging=true;event.dataTransfer.setData('text/plain',task.dataset.task);event.dataTransfer.effectAllowed='move';task.classList.add('dragging');
+  });
+  document.addEventListener('dragover',event=>{const column=event.target.closest('.column');if(column&&dragging){event.preventDefault();event.dataTransfer.dropEffect='move';column.classList.add('drag-target')}});
+  document.addEventListener('dragleave',event=>{const column=event.target.closest('.column');if(column&&!column.contains(event.relatedTarget))column.classList.remove('drag-target')});
+  document.addEventListener('drop',event=>{const column=event.target.closest('.column');if(!column||!dragging)return;event.preventDefault();const id=event.dataTransfer.getData('text/plain');const project=doc.projects.find(p=>p.id===column.dataset.projectId);if(project?.tasks.some(t=>t.id===id))moveTask(id,column.dataset.dropstatus)});
+  document.addEventListener('dragend',()=>{dragging=false;document.querySelectorAll('.dragging,.drag-target').forEach(el=>el.classList.remove('dragging','drag-target'));if(renderAfterDrag&&doc){renderAfterDrag=false;renderProjects()}});
+  window.addEventListener('hashchange',openHash);
+  document.querySelectorAll('.nav a').forEach(link=>link.addEventListener('click',()=>{document.querySelectorAll('.nav a').forEach(a=>a.removeAttribute('aria-current'));link.setAttribute('aria-current','location')}));
+  if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{const entry=entries.find(e=>e.isIntersecting);if(entry){document.querySelectorAll('.nav a').forEach(a=>{if(a.hash==='#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}},{rootMargin:'-90px 0px -60% 0px'});document.querySelectorAll('#hub>section').forEach(s=>observer.observe(s))}
+  $('export-button').addEventListener('click',()=>{
+    if(!doc||pending.size){toast('Bitte warten, bis alle Änderungen gespeichert sind.');return}
+    const snapshot=JSON.stringify(HubCore.snapshot(doc,overrides),null,2).replace(/</g,'\\u003c');
+    const localConfig=JSON.stringify({localId:crypto.randomUUID?crypto.randomUUID():String(Date.now())});
+    const result=originalHTML.replace(/(<script id="hub-data" type="application\/json">)[\s\S]*?(<\/script>)/,(_,start,end)=>start+'\n'+snapshot+'\n'+end).replace(/(<script id="cloud-config" type="application\/json">)[\s\S]*?(<\/script>)/,(_,start,end)=>start+localConfig+end);
+    const url=URL.createObjectURL(new Blob([result],{type:'text/html;charset=utf-8'}));const anchor=document.createElement('a');anchor.href=url;anchor.download='Projekte-und-Ziele.html';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
+  });
+  $('login-form').addEventListener('submit',async event=>{
+    event.preventDefault();const button=event.target.querySelector('button');button.disabled=true;$('login-error').hidden=true;const epoch=authEpoch;
+    try{const credentials=await tokenRequest('password',{email:$('email').value.trim(),password:$('password').value});if(epoch!==authEpoch)return;adoptSession(credentials);$('password').value='';const next=await fetchCloud();if(epoch!==authEpoch)return;doc=next.document;overrides=next.status;renderContent();saved()}
+    catch(error){$('login-form').hidden=false;$('login-error').textContent=error.status===400?'E-Mail oder Passwort prüfen.':'Verbindung oder Zugang prüfen und erneut versuchen.';$('login-error').hidden=false;setState('')}
+    finally{button.disabled=false}
+  });
+  $('logout-button').addEventListener('click',async()=>{const token=session?.access_token;showLogin();if(token)try{await fetch(config.url+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:config.key,Authorization:'Bearer '+token}})}catch{}});
+  window.addEventListener('focus',sync);window.addEventListener('online',sync);document.addEventListener('visibilitychange',sync);window.addEventListener('offline',()=>{if(cloud)setState('Offline','error')});
+  window.addEventListener('storage',event=>{
+    if(event.key===sessionKey&&cloud){session=read(sessionKey,null);if(!session)showLogin();else sync()}
+    if(event.key===statusKey&&!cloud&&doc){overrides=HubCore.sanitize(doc,read(statusKey,{}));renderProjects()}
+  });
+  async function start(){
+    openStates=read(openKey,{});
+    if(!cloud){
+      doc=JSON.parse($('hub-data').textContent);
+      if(!doc){setState('Noch nicht eingerichtet','error');return}
+      overrides=HubCore.sanitize(doc,read(statusKey,{}));write(statusKey,overrides);renderContent();saved();return;
+    }
+    session=read(sessionKey,null);
+    if(!session){showLogin();return}
+    setState('Wird geladen …');const epoch=authEpoch;
+    try{const next=await fetchCloud();if(epoch!==authEpoch)return;doc=next.document;overrides=next.status;renderContent();saved()}
+    catch{showLogin('Verbindung prüfen und erneut anmelden.')}
+  }
+  setInterval(sync,15000);start();
+})();
+</script>
+</body>
+</html>
