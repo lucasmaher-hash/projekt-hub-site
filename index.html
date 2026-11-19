@@ -26,16 +26,52 @@
 .exercise-list{border-color:color-mix(in srgb,var(--done) 20%,var(--surface))}.exercise+.exercise{border-top-color:color-mix(in srgb,var(--done) 16%,var(--surface))}.exercise>summary{background:color-mix(in srgb,var(--done) 3%,var(--surface))}.exercise>summary:hover,.exercise[open]>summary{background:color-mix(in srgb,var(--done) 7%,var(--surface))}.exercise .chevron,.source{color:var(--done)}.exercise-content{padding-top:12px}
 @media(max-width:760px){.board{padding:12px;gap:10px}.column{padding:12px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+/* Editing */
+:root{--danger:#d70015}@media(prefers-color-scheme:dark){:root{--danger:#ff6961}}
+.field,.task-input,.notes,.value-input{font:inherit;color:var(--ink);background:var(--well);border:1px solid var(--line);border-radius:8px;padding:8px 10px;width:100%;min-width:0;font-size:15px;line-height:1.45}
+.field:focus,.task-input:focus,.notes:focus,.value-input:focus,.task-tools select:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+textarea{font:inherit;field-sizing:content}
+.edit-button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.task.editing{cursor:default;flex-direction:column;align-items:stretch;gap:8px;padding:8px;min-height:0;transform:none}
+.task.editing:hover{transform:none}
+.task-input{resize:none;overflow:hidden;font-size:14px;min-height:40px;background:var(--surface)}
+.task-tools{display:flex;gap:6px;align-items:center}
+.task-tools select{flex:1;min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 8px;color:var(--ink);font-size:13px}
+.x{width:34px;height:34px;flex:none;border-radius:8px;background:transparent;color:var(--muted);font-size:21px;line-height:1;display:grid;place-items:center}
+.x:hover{background:color-mix(in srgb,var(--danger) 10%,transparent);color:var(--danger)}
+.add{display:block;width:100%;margin-top:10px;padding:9px 12px;border:1px dashed color-mix(in srgb,var(--muted) 45%,transparent);border-radius:10px;background:transparent;color:var(--muted);font-size:14px;text-align:left}
+.add:hover{color:var(--ink);border-color:var(--ink)}
+.add.chip{width:auto;display:inline-block;margin:0;border-radius:999px;padding:5px 12px;font-size:13px}
+.add.block{padding:15px 20px;border-radius:var(--radius);font-size:15px}
+.goal-list .add{width:calc(100% - 32px);margin:12px 16px 16px}
+.project-edit{display:flex;gap:10px;align-items:center;padding:16px 18px 0}
+.ghost{background:transparent;border:1px solid var(--line);border-radius:8px;padding:8px 12px;font-size:14px;white-space:nowrap}
+.danger{color:var(--danger)}.ghost.danger:hover{background:color-mix(in srgb,var(--danger) 8%,transparent)}
+.value.editing{display:inline-flex;align-items:center;gap:0;padding:1px 1px 1px 2px}
+.value-input{border:0;background:transparent;width:auto;padding:3px 6px;font-size:13px;color:inherit;min-width:5ch}
+.value.editing .x{width:26px;height:26px;font-size:17px}
+.goal.editing{padding:8px 10px 8px 16px;gap:6px}
+.goal-head .field{margin-top:6px}.goal-head .field+.field{font-size:13px}
+.exercise-edit{display:grid;gap:10px;margin-bottom:18px}
+.exercise-edit label,.notes-label{display:block;font-size:13px;color:var(--muted);font-weight:550}
+.exercise-edit label .field{margin-top:5px;font-weight:400}
+.exercise-edit textarea.field{min-height:120px;resize:vertical}
+.notes-label{margin-top:20px;max-width:75ch}
+.notes{display:block;margin-top:6px;min-height:110px;resize:vertical;font-weight:400}
+.notes[readonly]{opacity:.6}
+.exercise-tools{display:flex;justify-content:flex-end;margin-top:4px}
+.section-tools{margin-top:12px}
+@media(max-width:760px){.field,.task-input,.notes,.value-input,.task-tools select{font-size:16px}.project-edit{flex-wrap:wrap;padding:14px 12px 0}.project-edit .ghost{width:100%}}
 </style>
 </head>
 <body>
-<header><div class="top-inner"><div><h1>Projekte & Ziele</h1><p class="date" id="document-date"></p></div><div class="top-actions"><span class="save-state" id="save-state" role="status" aria-live="polite"></span><button class="icon-button" id="export-button" type="button" title="HTML sichern" aria-label="Aktuellen Stand als HTML sichern" hidden><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg></button><button class="icon-button" id="logout-button" type="button" title="Abmelden" aria-label="Abmelden" hidden><svg viewBox="0 0 24 24"><path d="M9 4H4v16h5m5-13 5 5-5 5m-6-5h11"/></svg></button></div></div></header>
+<header><div class="top-inner"><div><h1>Projekte & Ziele</h1><p class="date" id="document-date"></p></div><div class="top-actions"><span class="save-state" id="save-state" role="status" aria-live="polite"></span><button class="icon-button edit-button" id="edit-button" type="button" title="Bearbeiten" aria-label="Bearbeiten" aria-pressed="false" hidden></button><button class="icon-button" id="export-button" type="button" title="HTML sichern" aria-label="Aktuellen Stand als HTML sichern" hidden><svg viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M5 16v5h14v-5"/></svg></button><button class="icon-button" id="logout-button" type="button" title="Abmelden" aria-label="Abmelden" hidden><svg viewBox="0 0 24 24"><path d="M9 4H4v16h5m5-13 5 5-5 5m-6-5h11"/></svg></button></div></div></header>
 <nav class="nav" id="navigation" aria-label="Bereiche" hidden><div class="nav-inner"><a href="#projekte" aria-current="location">Projekte</a><a href="#ziele">Ziele</a><a href="#reflexion">Reflexion</a></div></nav>
 <main>
 <form class="login" id="login-form" hidden><h2>Anmelden</h2><label for="email">E-Mail<input id="email" name="email" type="email" autocomplete="username" required></label><label for="password">Passwort<input id="password" name="password" type="password" autocomplete="current-password" required></label><button class="primary" type="submit">Anmelden</button><p class="login-error" id="login-error" role="alert" hidden></p></form>
-<div id="hub" hidden><section id="projekte" aria-labelledby="projects-title"><div class="section-head"><h2 id="projects-title">Projekte</h2><span class="count" id="project-count"></span></div><div id="active-projects"></div><div id="finished-group" hidden><h3 class="finished-label">Abgeschlossen</h3><div id="finished-projects"></div></div></section>
+<div id="hub" hidden><section id="projekte" aria-labelledby="projects-title"><div class="section-head"><h2 id="projects-title">Projekte</h2><span class="count" id="project-count"></span></div><div id="active-projects"></div><div class="section-tools" id="project-tools"></div><div id="finished-group" hidden><h3 class="finished-label">Abgeschlossen</h3><div id="finished-projects"></div></div></section>
 <section id="ziele" aria-labelledby="goals-title"><div class="section-head"><h2 id="goals-title">Ziele</h2></div><div class="values" id="values"></div><div class="goal-grid" id="goals"></div></section>
-<section id="reflexion" aria-labelledby="reflection-title"><div class="section-head"><h2 id="reflection-title">Reflexion</h2></div><div class="exercise-list" id="exercises"></div></section></div>
+<section id="reflexion" aria-labelledby="reflection-title"><div class="section-head"><h2 id="reflection-title">Reflexion</h2></div><div class="exercise-list" id="exercises"></div><div class="section-tools" id="exercise-tools-bottom"></div></section></div>
 </main>
 <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 <script id="cloud-config" type="application/json">{"url": "https://vmpdcmkprpuwzazcqboy.supabase.co", "key": "sb_publishable_2AL5v6Ef17e-NKyobVZ_Og_EjCmEBuF"}</script>
@@ -49,7 +85,22 @@ const HubCore = (() => {
   const split = (projects,overrides) => ({active:projects.filter(p=>!complete(p,overrides)),done:projects.filter(p=>complete(p,overrides))});
   const sanitize = (document, raw) => Object.fromEntries(document.projects.flatMap(p=>p.tasks).filter(t=>raw && Object.hasOwn(statuses,raw[t.id])).map(t=>[t.id,raw[t.id]]));
   const snapshot = (document, overrides) => ({...document,projects:document.projects.map(p=>({...p,tasks:p.tasks.map(t=>({...t,status:statusOf(t,overrides)}))}))});
-  return {statuses,escape,statusOf,complete,split,sanitize,snapshot};
+  const text = value => typeof value === 'string' ? value : '';
+  const list = value => Array.isArray(value) ? value : [];
+  const uid = prefix => prefix+'-'+(globalThis.crypto?.randomUUID ? globalThis.crypto.randomUUID().slice(0,8) : Date.now().toString(36)+Math.random().toString(36).slice(2,6));
+  // Repairs any stored document into the editable v2 shape; unknown fields are dropped.
+  const normalize = source => {
+    const d = source && typeof source === 'object' ? source : {};
+    return {
+      version:2, updated:text(d.updated)||new Date().toISOString().slice(0,10),
+      values:list(d.values).filter(v=>typeof v==='string'),
+      projects:list(d.projects).filter(p=>p&&p.id!=null).map(p=>({id:String(p.id),name:text(p.name),tasks:list(p.tasks).filter(t=>t&&t.id!=null).map(t=>({id:String(t.id),title:text(t.title),status:Object.hasOwn(statuses,t.status)?t.status:'todo'}))})),
+      horizons:list(d.horizons).filter(h=>h&&typeof h==='object').map(h=>({name:text(h.name),label:text(h.label),goals:list(h.goals).filter(g=>g&&typeof g==='object').map(g=>({title:text(g.title),projects:list(g.projects).filter(x=>typeof x==='string')}))})),
+      exercises:list(d.exercises).filter(x=>x&&x.id!=null).map(x=>({id:String(x.id),name:text(x.name),questions:list(x.questions).filter(q=>typeof q==='string'),source:text(x.source),url:text(x.url),notes:text(x.notes)}))
+    };
+  };
+  const safeUrl = value => /^https?:\/\//i.test(text(value)) ? value : '';
+  return {statuses,escape,statusOf,complete,split,sanitize,snapshot,normalize,uid,safeUrl};
 })();
 </script>
 <script id="hub-app">
@@ -60,41 +111,121 @@ const HubCore = (() => {
   const config = JSON.parse($('cloud-config').textContent);
   const cloud = Boolean(config.url && config.key);
   const namespace = cloud ? 'project-hub:'+config.url : 'project-hub:local:'+(config.localId||'v1');
-  const sessionKey=namespace+':auth', statusKey=namespace+':status', openKey=namespace+':open';
-  let doc=null, overrides={}, openStates={}, session=null, refreshPromise=null, pollBusy=false, renderAfterDrag=false, dragging=false, toastTimer, authEpoch=0;
+  const sessionKey=namespace+':auth', statusKey=namespace+':status', docKey=namespace+':doc', openKey=namespace+':open';
+  // rev: row version in the cloud (null = database not yet updated for editing, status-only legacy mode).
+  let doc=null, rev=null, openStates={}, session=null, refreshPromise=null, pollBusy=false, renderAfterDrag=false, dragging=false, toastTimer, authEpoch=0;
+  let editing=false, saving=false, dirty=false, saveTimer=null, legacyHinted=false;
   const pending=new Set();
   const E=HubCore.escape, statuses=HubCore.statuses;
   const arrow='<svg class="chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="m8 5 5 5-5 5"/></svg>';
+  const pencil='<svg viewBox="0 0 24 24"><path d="M4 20h4L19 9l-4-4L4 16v4Zm9-13 4 4"/></svg>';
+  const check='<svg viewBox="0 0 24 24"><path d="m5 12 5 5 9-10"/></svg>';
   let storageOK=true;
   function read(key,fallback){try{return JSON.parse(localStorage.getItem(key))??fallback}catch{return fallback}}
   function write(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{storageOK=false;return false}}
   function setState(text,state=''){ $('save-state').textContent=text;$('save-state').dataset.state=state; }
   function toast(message){clearTimeout(toastTimer);$('toast').textContent=message;$('toast').hidden=false;toastTimer=setTimeout(()=>$('toast').hidden=true,6000)}
   function saved(){setState(cloud?'Synchronisiert':storageOK?'Lokal gespeichert':'Nur in dieser Sitzung',storageOK?'saved':'error')}
-  function showHub(){ $('hub').hidden=false;$('navigation').hidden=false;$('login-form').hidden=true;$('export-button').hidden=false;$('logout-button').hidden=!cloud; }
-  function showLogin(message=''){authEpoch++;doc=null;overrides={};session=null;pending.clear();try{localStorage.removeItem(sessionKey)}catch{};$('hub').hidden=true;$('navigation').hidden=true;$('export-button').hidden=true;$('logout-button').hidden=true;$('active-projects').replaceChildren();$('finished-projects').replaceChildren();$('goals').replaceChildren();$('values').replaceChildren();$('exercises').replaceChildren();$('document-date').textContent='';$('login-form').hidden=false;$('login-error').hidden=!message;$('login-error').textContent=message;setState('');}
+  const canWrite=()=>!cloud||rev!==null;
+  const today=()=>new Date().toLocaleDateString('sv');
+  const typing=()=>{const el=document.activeElement;return Boolean(el&&$('hub').contains(el)&&/^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName))};
+  const findProject=id=>doc.projects.find(p=>p.id===id);
+  const findTask=id=>{for(const p of doc.projects){const t=p.tasks.find(t=>t.id===id);if(t)return {project:p,task:t}}return null};
+  const findExercise=id=>doc.exercises.find(x=>x.id===id);
+
+  function showHub(){ $('hub').hidden=false;$('navigation').hidden=false;$('login-form').hidden=true;$('export-button').hidden=false;$('logout-button').hidden=!cloud;$('edit-button').hidden=!canWrite(); }
+  function showLogin(message=''){authEpoch++;doc=null;rev=null;session=null;pending.clear();dirty=false;clearTimeout(saveTimer);setEditing(false,false);try{localStorage.removeItem(sessionKey)}catch{};$('hub').hidden=true;$('navigation').hidden=true;$('export-button').hidden=true;$('logout-button').hidden=true;$('edit-button').hidden=true;['active-projects','finished-projects','goals','values','exercises','project-tools','exercise-tools-bottom'].forEach(id=>$(id).replaceChildren());$('document-date').textContent='';$('login-form').hidden=false;$('login-error').hidden=!message;$('login-error').textContent=message;setState('');}
+
+  // ---------- Rendering ----------
+  function taskCard(t){
+    if(editing)return `<article class="task editing" data-task="${E(t.id)}"><textarea class="task-input" data-edit="task-title" data-task="${E(t.id)}" rows="1" placeholder="Aufgabe beschreiben" aria-label="Aufgabe">${E(t.title)}</textarea><div class="task-tools"><select data-edit="task-status" data-task="${E(t.id)}" aria-label="Status">${Object.entries(statuses).map(([s,l])=>`<option value="${s}"${s===t.status?' selected':''}>${l}</option>`).join('')}</select><button class="x" type="button" data-action="delete-task" data-task="${E(t.id)}" aria-label="Aufgabe löschen" title="Aufgabe löschen">×</button></div></article>`;
+    return `<article class="task" draggable="${!pending.has(t.id)}" data-task="${E(t.id)}" aria-busy="${pending.has(t.id)}"><span class="task-title">${E(t.title)}</span></article>`;
+  }
   function renderBoard(project){
-    const done=project.tasks.filter(t=>HubCore.statusOf(t,overrides)==='done').length;
-    return `<details class="project" id="project-${E(project.id)}" data-project="${E(project.id)}" ${openStates[project.id]?'open':''}><summary><span>${E(project.name)}</span>${arrow}</summary><div class="board">${Object.entries(statuses).map(([status,label])=>{
-      const tasks=project.tasks.filter(t=>HubCore.statusOf(t,overrides)===status);
-      return `<div class="column" data-dropstatus="${status}" data-project-id="${E(project.id)}"><div class="column-head"><span class="dot" aria-hidden="true"></span>${label}<span class="column-count">${tasks.length}</span></div>${tasks.map(t=>`<article class="task" draggable="${!pending.has(t.id)}" data-task="${E(t.id)}" aria-busy="${pending.has(t.id)}"><span class="task-title">${E(t.title)}</span></article>`).join('')}</div>`;
+    const done=project.tasks.filter(t=>t.status==='done').length;
+    const head=editing?`<div class="project-edit"><input class="field" data-edit="project-name" data-project="${E(project.id)}" value="${E(project.name)}" placeholder="Projektname" aria-label="Projektname"><button class="ghost danger" type="button" data-action="delete-project" data-project="${E(project.id)}">Projekt löschen</button></div>`:'';
+    return `<details class="project" id="project-${E(project.id)}" data-project="${E(project.id)}" ${openStates[project.id]?'open':''}><summary><span>${E(project.name||'Ohne Namen')}</span>${arrow}</summary>${head}<div class="board">${Object.entries(statuses).map(([status,label])=>{
+      const tasks=project.tasks.filter(t=>t.status===status);
+      return `<div class="column" data-dropstatus="${status}" data-project-id="${E(project.id)}"><div class="column-head"><span class="dot" aria-hidden="true"></span>${label}<span class="column-count">${tasks.length}</span></div>${tasks.map(taskCard).join('')}${editing?`<button class="add" type="button" data-action="add-task" data-project="${E(project.id)}" data-status="${status}">+ Aufgabe</button>`:''}</div>`;
     }).join('')}</div>${project.tasks.length?`<p class="project-progress">${done} von ${project.tasks.length} erledigt</p>`:''}</details>`;
   }
   function renderProjects(){
     if(dragging){renderAfterDrag=true;return}
-    const groups=HubCore.split(doc.projects,overrides);
+    const groups=HubCore.split(doc.projects,{});
     $('active-projects').innerHTML=groups.active.map(renderBoard).join('');$('finished-projects').innerHTML=groups.done.map(renderBoard).join('');$('finished-group').hidden=!groups.done.length;
-    $('project-count').textContent=doc.projects.length+' Projekte';
+    $('project-count').textContent=doc.projects.length+(doc.projects.length===1?' Projekt':' Projekte');
+    $('project-tools').innerHTML=editing?'<button class="add block" type="button" data-action="add-project">+ Projekt</button>':'';
     document.querySelectorAll('.project').forEach(details=>details.addEventListener('toggle',()=>{if(details.isConnected){openStates[details.dataset.project]=details.open;write(openKey,openStates)}}));
+    autosize();
   }
+  function renderGoals(){
+    $('values').innerHTML='<span class="values-label">Werte</span>'+doc.values.map((v,i)=>editing
+      ?`<span class="value editing"><input class="value-input" data-edit="value" data-index="${i}" value="${E(v)}" size="${Math.max(5,v.length)}" aria-label="Wert"><button class="x" type="button" data-action="delete-value" data-index="${i}" aria-label="Wert löschen">×</button></span>`
+      :`<span class="value">${E(v)}</span>`).join('')+(editing?'<button class="add chip" type="button" data-action="add-value">+ Wert</button>':'');
+    $('goals').innerHTML=doc.horizons.map((h,hi)=>`<div class="goal-group"><div class="goal-head">${editing
+      ?`<input class="field" data-edit="horizon-name" data-h="${hi}" value="${E(h.name)}" aria-label="Zeitraum"><input class="field" data-edit="horizon-label" data-h="${hi}" value="${E(h.label)}" aria-label="Beschreibung">`
+      :`<h3>${E(h.name)}</h3><span>${E(h.label)}</span>`}</div><div class="goal-list">${h.goals.map((g,gi)=>editing
+      ?`<div class="goal editing"><input class="field" data-edit="goal" data-h="${hi}" data-g="${gi}" value="${E(g.title)}" placeholder="Ziel" aria-label="Ziel"><button class="x" type="button" data-action="delete-goal" data-h="${hi}" data-g="${gi}" aria-label="Ziel löschen">×</button></div>`
+      :`<div class="goal"><span>${E(g.title)}</span></div>`).join('')}${editing?`<button class="add" type="button" data-action="add-goal" data-h="${hi}">+ Ziel</button>`:''}</div></div>`).join('');
+  }
+  function renderExercises(){
+    const ro=canWrite()?'':' readonly';
+    $('exercises').innerHTML=doc.exercises.map(x=>{
+      const url=HubCore.safeUrl(x.url);
+      const body=editing
+        ?`<div class="exercise-edit"><label>Name<input class="field" data-edit="exercise-name" data-ex="${E(x.id)}" value="${E(x.name)}"></label><label>Fragen, eine pro Zeile<textarea class="field" data-edit="exercise-questions" data-ex="${E(x.id)}" rows="5">${E(x.questions.join('\n'))}</textarea></label><label>Quelle<input class="field" data-edit="exercise-source" data-ex="${E(x.id)}" value="${E(x.source)}"></label><label>Link<input class="field" data-edit="exercise-url" data-ex="${E(x.id)}" value="${E(x.url)}" inputmode="url" placeholder="https://"></label><div class="exercise-tools"><button class="ghost danger" type="button" data-action="delete-exercise" data-ex="${E(x.id)}">Übung löschen</button></div></div>`
+        :`${x.questions.length?`<ol class="questions">${x.questions.map(q=>`<li>${E(q)}</li>`).join('')}</ol>`:''}${url?`<a class="source" href="${E(url)}" target="_blank" rel="noopener noreferrer">${E(x.source||'Quelle')} ↗</a>`:x.source?`<span class="source">${E(x.source)}</span>`:''}`;
+      return `<details class="exercise" data-ex="${E(x.id)}" ${openStates['ex:'+x.id]?'open':''}><summary><span>${E(x.name||'Ohne Namen')}</span>${arrow}</summary><div class="exercise-content">${body}<label class="notes-label">Deine Antworten<textarea class="notes" data-edit="notes" data-ex="${E(x.id)}" rows="4" placeholder="Schreib hier deine Gedanken …"${ro}>${E(x.notes)}</textarea></label></div></details>`;
+    }).join('');
+    $('exercise-tools-bottom').innerHTML=editing?'<button class="add block" type="button" data-action="add-exercise">+ Übung</button>':'';
+    document.querySelectorAll('.exercise').forEach(details=>details.addEventListener('toggle',()=>{if(details.isConnected){openStates['ex:'+details.dataset.ex]=details.open;write(openKey,openStates);autosize()}}));
+    autosize();
+  }
+  function renderDate(){$('document-date').textContent='Stand: '+new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long',year:'numeric'}).format(new Date(doc.updated+'T12:00:00'))}
   function renderContent(){
     if(!Object.keys(openStates).length&&doc.projects[0])openStates[doc.projects[0].id]=true;
-    $('document-date').textContent='Stand: '+new Intl.DateTimeFormat('de-DE',{day:'numeric',month:'long',year:'numeric'}).format(new Date(doc.updated+'T12:00:00'));
-    $('values').innerHTML='<span class="values-label">Werte</span>'+doc.values.map(v=>`<span class="value">${E(v)}</span>`).join('');
-    $('goals').innerHTML=doc.horizons.map(h=>`<div class="goal-group"><div class="goal-head"><h3>${E(h.name)}</h3><span>${E(h.label)}</span></div><div class="goal-list">${h.goals.map(g=>`<div class="goal"><span>${E(g.title)}</span></div>`).join('')}</div></div>`).join('');
-    $('exercises').innerHTML=doc.exercises.map(x=>`<details class="exercise"><summary><span>${E(x.name)}</span>${arrow}</summary><div class="exercise-content"><ol class="questions">${x.questions.map(q=>`<li>${E(q)}</li>`).join('')}</ol><a class="source" href="${E(x.url)}" target="_blank" rel="noopener noreferrer">${E(x.source)} ↗</a></div></details>`).join('');
-    renderProjects();showHub();openHash();
+    renderDate();renderGoals();renderExercises();renderProjects();showHub();openHash();
   }
+  // Fallback for browsers without CSS field-sizing: grow textareas with their content.
+  function autosize(root=document){if(CSS.supports?.('field-sizing','content'))return;root.querySelectorAll('textarea.task-input,textarea.notes,.exercise-edit textarea').forEach(el=>{el.style.height='auto';el.style.height=el.scrollHeight+2+'px'})}
+  function setEditing(on,render=true){
+    editing=on&&canWrite();
+    document.body.classList.toggle('is-editing',editing);
+    const b=$('edit-button');b.setAttribute('aria-pressed',String(editing));b.innerHTML=editing?check:pencil;b.title=editing?'Fertig':'Bearbeiten';b.setAttribute('aria-label',editing?'Bearbeiten beenden':'Bearbeiten');
+    if(render&&doc){renderGoals();renderExercises();renderProjects()}
+  }
+
+  // ---------- Saving ----------
+  function persist(delay=600){
+    if(!doc)return;
+    doc.updated=today();renderDate();
+    if(!cloud){write(docKey,doc);saved();if(!storageOK)toast('Browser-Speicherung nicht verfügbar. Bitte HTML sichern.');return}
+    if(rev===null)return;
+    dirty=true;setState('Wird gespeichert …');clearTimeout(saveTimer);saveTimer=setTimeout(flush,delay);
+  }
+  async function flush(){
+    clearTimeout(saveTimer);saveTimer=null;
+    if(saving||!dirty||!cloud||rev===null||!session)return;
+    saving=true;dirty=false;const epoch=authEpoch;let retry=0;
+    const body=JSON.parse(JSON.stringify(doc));
+    try{
+      const rows=await api('hub_content?rev=eq.'+rev,{method:'PATCH',body:JSON.stringify({document:body,rev:rev+1})});
+      if(epoch!==authEpoch)return;
+      if(rows.length!==1){
+        // Another device saved first: take its version instead of overwriting it.
+        dirty=false;const next=await fetchCloud();if(epoch!==authEpoch)return;
+        adopt(next);toast('Auf einem anderen Gerät geändert. Neuester Stand geladen, bitte letzte Änderung prüfen.');return;
+      }
+      rev=rows[0].rev;if(!dirty)saved();
+    }catch{if(epoch===authEpoch&&session){dirty=true;retry=5000;setState('Nicht gespeichert, neuer Versuch …','error')}}
+    finally{saving=false;if(dirty&&epoch===authEpoch&&!saveTimer)saveTimer=setTimeout(flush,retry||300)}
+  }
+  function adopt(next){doc=next.document;rev=next.rev;renderContent();saved();
+    if(next.migrated&&rev!==null){dirty=true;flush()}
+    if(rev===null&&!legacyHinted){legacyHinted=true;toast('Bearbeiten ist freigeschaltet, sobald das Datenbank-Update in Supabase ausgeführt ist.')}
+  }
+
+  // ---------- Cloud ----------
   function adoptSession(value){session={access_token:value.access_token,refresh_token:value.refresh_token,expires_at:value.expires_at||Math.floor(Date.now()/1000)+value.expires_in};write(sessionKey,session)}
   async function tokenRequest(type,body){
     const response=await fetch(config.url+'/auth/v1/token?grant_type='+type,{method:'POST',headers:{'Content-Type':'application/json',apikey:config.key},body:JSON.stringify(body)});
@@ -122,83 +253,164 @@ const HubCore = (() => {
     return response.json();
   }
   async function fetchCloud(){
-    const [documents,rows]=await Promise.all([api('hub_content?select=document'),api('hub_tasks?select=id,status')]);
-    if(!documents[0]?.document)throw new Error('Noch keine Inhalte verfügbar.');
-    return {document:documents[0].document,status:HubCore.sanitize(documents[0].document,Object.fromEntries(rows.map(r=>[r.id,r.status])))};
+    const rows=await api('hub_content?select=*');
+    const row=rows[0];if(!row?.document)throw new Error('Noch keine Inhalte verfügbar.');
+    const rowRev=Number.isInteger(row.rev)?row.rev:null;
+    let source=row.document,migrated=false;
+    if(!(source.version>=2)){
+      // v1 kept task status in hub_tasks; fold it into the document once.
+      const tasks=await api('hub_tasks?select=id,status');
+      source=HubCore.snapshot(source,HubCore.sanitize(source,Object.fromEntries(tasks.map(r=>[r.id,r.status]))));migrated=true;
+    }
+    return {document:HubCore.normalize(source),rev:rowRev,migrated};
   }
   async function sync(){
-    if(!cloud||!session||pending.size||pollBusy||document.hidden)return;
+    if(!cloud||!session||!doc||pending.size||pollBusy||saving||dirty||dragging||document.hidden||typing())return;
     pollBusy=true;const epoch=authEpoch;
     try{
       const next=await fetchCloud();
-      if(pending.size||epoch!==authEpoch||!session)return;
-      const contentChanged=JSON.stringify(next.document)!==JSON.stringify(doc),changed=JSON.stringify(next.status)!==JSON.stringify(overrides);
-      doc=next.document;overrides=next.status;
-      if(contentChanged)renderContent();else if(changed)renderProjects();
+      if(pending.size||saving||dirty||typing()||epoch!==authEpoch||!session)return;
+      if(next.rev!==rev||JSON.stringify(next.document)!==JSON.stringify(doc)){doc=next.document;rev=next.rev;renderContent()}
       saved();
     }catch{if(session&&epoch===authEpoch)setState(navigator.onLine?'Abgleich nicht möglich':'Offline','error')}
     finally{pollBusy=false}
   }
+
+  // ---------- Changes ----------
   async function moveTask(id,status){
     if(!doc||!Object.hasOwn(statuses,status)||pending.has(id))return;
-    const task=doc.projects.flatMap(p=>p.tasks).find(t=>t.id===id);if(!task)return;
-    const before=HubCore.statusOf(task,overrides);if(before===status)return;
-    overrides[id]=status;
-    if(!cloud){write(statusKey,overrides);saved();renderProjects();if(!storageOK)toast('Browser-Speicherung nicht verfügbar. Bitte HTML sichern.');return}
+    const found=findTask(id);if(!found)return;
+    const before=found.task.status;if(before===status)return;
+    found.task.status=status;
+    if(!cloud||rev!==null){renderProjects();persist(150);return}
+    // Legacy mode until the database update ran: status lives in hub_tasks.
     const epoch=authEpoch;pending.add(id);setState('Wird gespeichert …');renderProjects();
     try{
       const rows=await api('hub_tasks?id=eq.'+encodeURIComponent(id),{method:'PATCH',body:JSON.stringify({status})});
       if(epoch!==authEpoch)return;
       if(rows.length!==1)throw new Error('Aufgabe nicht gespeichert.');
-      overrides[id]=rows[0].status;saved();
-    }catch{if(epoch===authEpoch){overrides[id]=before;setState('Nicht gespeichert','error');toast('Änderung nicht gespeichert. Bitte erneut versuchen.')}}
+      found.task.status=rows[0].status;saved();
+    }catch{if(epoch===authEpoch){found.task.status=before;setState('Nicht gespeichert','error');toast('Änderung nicht gespeichert. Bitte erneut versuchen.')}}
     finally{if(epoch===authEpoch){pending.delete(id);if(pending.size)setState('Wird gespeichert …');if(doc)renderProjects()}}
+  }
+  function focusLater(selector){const el=document.querySelector(selector);if(el){el.focus({preventScroll:true});if(el.tagName==='INPUT')el.select();el.scrollIntoView({block:'nearest'})}}
+  function onAction(button){
+    if(!doc||!canWrite())return;
+    const a=button.dataset.action,d=button.dataset;
+    if(a==='add-task'){const p=findProject(d.project);if(!p)return;const t={id:HubCore.uid('t'),title:'',status:d.status};p.tasks.push(t);openStates[p.id]=true;renderProjects();focusLater(`textarea[data-task="${t.id}"]`)}
+    else if(a==='delete-task'){const f=findTask(d.task);if(!f)return;f.project.tasks=f.project.tasks.filter(t=>t.id!==d.task);renderProjects();persist(150)}
+    else if(a==='add-project'){const p={id:HubCore.uid('p'),name:'Neues Projekt',tasks:[]};doc.projects.push(p);openStates[p.id]=true;write(openKey,openStates);renderProjects();persist(150);focusLater(`input[data-edit="project-name"][data-project="${p.id}"]`)}
+    else if(a==='delete-project'){const p=findProject(d.project);if(!p)return;if(!confirm(`„${p.name||'Ohne Namen'}“ mit ${p.tasks.length} Aufgaben löschen?`))return;doc.projects=doc.projects.filter(x=>x.id!==p.id);doc.horizons.forEach(h=>h.goals.forEach(g=>g.projects=g.projects.filter(id=>id!==p.id)));renderProjects();persist(150)}
+    else if(a==='add-value'){doc.values.push('');renderGoals();focusLater(`input[data-edit="value"][data-index="${doc.values.length-1}"]`)}
+    else if(a==='delete-value'){doc.values.splice(Number(d.index),1);renderGoals();persist(150)}
+    else if(a==='add-goal'){const h=doc.horizons[Number(d.h)];if(!h)return;h.goals.push({title:'',projects:[]});renderGoals();focusLater(`input[data-edit="goal"][data-h="${d.h}"][data-g="${h.goals.length-1}"]`)}
+    else if(a==='delete-goal'){const h=doc.horizons[Number(d.h)];if(!h)return;h.goals.splice(Number(d.g),1);renderGoals();persist(150)}
+    else if(a==='add-exercise'){const x={id:HubCore.uid('x'),name:'Neue Übung',questions:[],source:'',url:'',notes:''};doc.exercises.push(x);openStates['ex:'+x.id]=true;write(openKey,openStates);renderExercises();persist(150);focusLater(`input[data-edit="exercise-name"][data-ex="${x.id}"]`)}
+    else if(a==='delete-exercise'){const x=findExercise(d.ex);if(!x)return;if(!confirm(`Übung „${x.name||'Ohne Namen'}“${x.notes?' samt deinen Antworten':''} löschen?`))return;doc.exercises=doc.exercises.filter(e=>e.id!==x.id);renderExercises();persist(150)}
+  }
+  // Text fields write straight into the document while typing; no re-render, so focus stays put.
+  function onInput(el){
+    if(!doc||!canWrite())return;
+    const k=el.dataset.edit,d=el.dataset,v=el.value;
+    if(k==='task-title'){const f=findTask(d.task);if(!f)return;f.task.title=v}
+    else if(k==='project-name'){const p=findProject(d.project);if(!p)return;p.name=v;const s=document.querySelector(`#project-${CSS.escape(p.id)}>summary>span`);if(s)s.textContent=v||'Ohne Namen'}
+    else if(k==='value'){doc.values[Number(d.index)]=v;el.size=Math.max(5,v.length)}
+    else if(k==='horizon-name'){doc.horizons[Number(d.h)].name=v}
+    else if(k==='horizon-label'){doc.horizons[Number(d.h)].label=v}
+    else if(k==='goal'){const h=doc.horizons[Number(d.h)];if(h?.goals[Number(d.g)])h.goals[Number(d.g)].title=v}
+    else if(k==='exercise-name'){const x=findExercise(d.ex);if(!x)return;x.name=v;const s=el.closest('.exercise')?.querySelector('summary>span');if(s)s.textContent=v||'Ohne Namen'}
+    else if(k==='exercise-questions'){const x=findExercise(d.ex);if(x)x.questions=v.split('\n').map(q=>q.trim()).filter(Boolean)}
+    else if(k==='exercise-source'){const x=findExercise(d.ex);if(x)x.source=v}
+    else if(k==='exercise-url'){const x=findExercise(d.ex);if(x)x.url=v.trim()}
+    else if(k==='notes'){const x=findExercise(d.ex);if(x)x.notes=v}
+    else return;
+    if(el.tagName==='TEXTAREA')autosize(el.parentElement);
+    persist(k==='notes'?1200:700);
+  }
+  // On leaving a field that was left empty, drop the entry. Only the DOM node is removed
+  // (no re-render), so a click on another button in the same gesture still lands.
+  function dropIfEmpty(el){
+    if(!doc||!canWrite()||!el.dataset?.edit||el.value.trim())return;
+    const k=el.dataset.edit,d=el.dataset;
+    if(k==='task-title'){
+      const f=findTask(d.task);if(!f)return;
+      f.project.tasks=f.project.tasks.filter(t=>t.id!==d.task);
+      const column=el.closest('.column');el.closest('.task')?.remove();
+      if(column)column.querySelector('.column-count').textContent=column.querySelectorAll('.task').length;
+    }else if(k==='value'){
+      doc.values.splice(Number(d.index),1);el.closest('.value')?.remove();
+      document.querySelectorAll('#values [data-index]').forEach(n=>{const i=[...document.querySelectorAll('#values .value')].indexOf(n.closest('.value'));n.dataset.index=i});
+    }else if(k==='goal'){
+      const h=doc.horizons[Number(d.h)];if(!h)return;h.goals.splice(Number(d.g),1);
+      const group=el.closest('.goal-list');el.closest('.goal')?.remove();
+      group?.querySelectorAll('.goal').forEach((g,i)=>g.querySelectorAll('[data-g]').forEach(n=>n.dataset.g=i));
+    }else return;
+    persist(150);
   }
   function openHash(){
     const id=decodeURIComponent(location.hash.slice(1));if(!id.startsWith('project-'))return;
     const project=$(id);if(project){project.open=true;requestAnimationFrame(()=>project.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}))}
   }
+
+  // ---------- Events ----------
+  document.addEventListener('click',event=>{const b=event.target.closest('[data-action]');if(b){event.preventDefault();onAction(b)}});
+  document.addEventListener('input',event=>{if(event.target.dataset?.edit&&event.target.dataset.edit!=='task-status')onInput(event.target)});
+  document.addEventListener('change',event=>{const el=event.target;if(el.dataset?.edit==='task-status'&&canWrite())moveTask(el.dataset.task,el.value)});
+  document.addEventListener('focusout',event=>dropIfEmpty(event.target));
+  document.addEventListener('keydown',event=>{
+    const el=event.target;
+    if(event.key==='Enter'&&!event.shiftKey&&el.matches?.('.task-input,input.field,.value-input')){event.preventDefault();el.blur()}
+    if(event.key==='Escape'&&editing&&!el.matches?.('textarea.notes'))el.blur?.();
+  });
+  $('edit-button').addEventListener('click',()=>{if(document.activeElement)document.activeElement.blur();setEditing(!editing);if(!editing&&dirty)flush()});
   document.addEventListener('dragstart',event=>{
-    const task=event.target.closest('.task');if(!task||pending.has(task.dataset.task))return;
+    const task=event.target.closest?.('.task');if(!task||editing||pending.has(task.dataset.task))return;
     dragging=true;event.dataTransfer.setData('text/plain',task.dataset.task);event.dataTransfer.effectAllowed='move';task.classList.add('dragging');
   });
-  document.addEventListener('dragover',event=>{const column=event.target.closest('.column');if(column&&dragging){event.preventDefault();event.dataTransfer.dropEffect='move';column.classList.add('drag-target')}});
-  document.addEventListener('dragleave',event=>{const column=event.target.closest('.column');if(column&&!column.contains(event.relatedTarget))column.classList.remove('drag-target')});
-  document.addEventListener('drop',event=>{const column=event.target.closest('.column');if(!column||!dragging)return;event.preventDefault();const id=event.dataTransfer.getData('text/plain');const project=doc.projects.find(p=>p.id===column.dataset.projectId);if(project?.tasks.some(t=>t.id===id))moveTask(id,column.dataset.dropstatus)});
+  document.addEventListener('dragover',event=>{const column=event.target.closest?.('.column');if(column&&dragging){event.preventDefault();event.dataTransfer.dropEffect='move';column.classList.add('drag-target')}});
+  document.addEventListener('dragleave',event=>{const column=event.target.closest?.('.column');if(column&&!column.contains(event.relatedTarget))column.classList.remove('drag-target')});
+  document.addEventListener('drop',event=>{const column=event.target.closest?.('.column');if(!column||!dragging)return;event.preventDefault();const id=event.dataTransfer.getData('text/plain');const project=findProject(column.dataset.projectId);if(project?.tasks.some(t=>t.id===id))moveTask(id,column.dataset.dropstatus)});
   document.addEventListener('dragend',()=>{dragging=false;document.querySelectorAll('.dragging,.drag-target').forEach(el=>el.classList.remove('dragging','drag-target'));if(renderAfterDrag&&doc){renderAfterDrag=false;renderProjects()}});
   window.addEventListener('hashchange',openHash);
   document.querySelectorAll('.nav a').forEach(link=>link.addEventListener('click',()=>{document.querySelectorAll('.nav a').forEach(a=>a.removeAttribute('aria-current'));link.setAttribute('aria-current','location')}));
   if('IntersectionObserver' in window){const observer=new IntersectionObserver(entries=>{const entry=entries.find(e=>e.isIntersecting);if(entry){document.querySelectorAll('.nav a').forEach(a=>{if(a.hash==='#'+entry.target.id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current')})}},{rootMargin:'-90px 0px -60% 0px'});document.querySelectorAll('#hub>section').forEach(s=>observer.observe(s))}
   $('export-button').addEventListener('click',()=>{
-    if(!doc||pending.size){toast('Bitte warten, bis alle Änderungen gespeichert sind.');return}
-    const snapshot=JSON.stringify(HubCore.snapshot(doc,overrides),null,2).replace(/</g,'\\u003c');
+    if(!doc||pending.size||dirty||saving){toast('Bitte warten, bis alle Änderungen gespeichert sind.');return}
+    const snapshot=JSON.stringify(doc,null,2).replace(/</g,'\\u003c');
     const localConfig=JSON.stringify({localId:crypto.randomUUID?crypto.randomUUID():String(Date.now())});
     const result=originalHTML.replace(/(<script id="hub-data" type="application\/json">)[\s\S]*?(<\/script>)/,(_,start,end)=>start+'\n'+snapshot+'\n'+end).replace(/(<script id="cloud-config" type="application\/json">)[\s\S]*?(<\/script>)/,(_,start,end)=>start+localConfig+end);
     const url=URL.createObjectURL(new Blob([result],{type:'text/html;charset=utf-8'}));const anchor=document.createElement('a');anchor.href=url;anchor.download='Projekte-und-Ziele.html';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
   });
   $('login-form').addEventListener('submit',async event=>{
     event.preventDefault();const button=event.target.querySelector('button');button.disabled=true;$('login-error').hidden=true;const epoch=authEpoch;
-    try{const credentials=await tokenRequest('password',{email:$('email').value.trim(),password:$('password').value});if(epoch!==authEpoch)return;adoptSession(credentials);$('password').value='';const next=await fetchCloud();if(epoch!==authEpoch)return;doc=next.document;overrides=next.status;renderContent();saved()}
+    try{const credentials=await tokenRequest('password',{email:$('email').value.trim(),password:$('password').value});if(epoch!==authEpoch)return;adoptSession(credentials);$('password').value='';const next=await fetchCloud();if(epoch!==authEpoch)return;adopt(next)}
     catch(error){$('login-form').hidden=false;$('login-error').textContent=error.status===400?'E-Mail oder Passwort prüfen.':'Verbindung oder Zugang prüfen und erneut versuchen.';$('login-error').hidden=false;setState('')}
     finally{button.disabled=false}
   });
-  $('logout-button').addEventListener('click',async()=>{const token=session?.access_token;showLogin();if(token)try{await fetch(config.url+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:config.key,Authorization:'Bearer '+token}})}catch{}});
-  window.addEventListener('focus',sync);window.addEventListener('online',sync);document.addEventListener('visibilitychange',sync);window.addEventListener('offline',()=>{if(cloud)setState('Offline','error')});
+  $('logout-button').addEventListener('click',async()=>{if((dirty||saving)&&!confirm('Es gibt ungespeicherte Änderungen. Trotzdem abmelden?'))return;const token=session?.access_token;showLogin();if(token)try{await fetch(config.url+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:config.key,Authorization:'Bearer '+token}})}catch{}});
+  window.addEventListener('focus',sync);window.addEventListener('online',()=>{if(dirty)flush();sync()});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden){if(dirty)flush()}else sync()});
+  window.addEventListener('pagehide',()=>{if(dirty)flush()});
+  window.addEventListener('beforeunload',event=>{if(dirty||saving){event.preventDefault();event.returnValue=''}});
+  window.addEventListener('offline',()=>{if(cloud)setState('Offline','error')});
   window.addEventListener('storage',event=>{
     if(event.key===sessionKey&&cloud){session=read(sessionKey,null);if(!session)showLogin();else sync()}
-    if(event.key===statusKey&&!cloud&&doc){overrides=HubCore.sanitize(doc,read(statusKey,{}));renderProjects()}
+    if(event.key===docKey&&!cloud&&doc&&!typing()){doc=HubCore.normalize(read(docKey,doc));renderContent()}
   });
   async function start(){
-    openStates=read(openKey,{});
+    openStates=read(openKey,{});setEditing(false,false);
     if(!cloud){
-      doc=JSON.parse($('hub-data').textContent);
-      if(!doc){setState('Noch nicht eingerichtet','error');return}
-      overrides=HubCore.sanitize(doc,read(statusKey,{}));write(statusKey,overrides);renderContent();saved();return;
+      const embedded=JSON.parse($('hub-data').textContent);
+      if(!embedded){setState('Noch nicht eingerichtet','error');return}
+      const stored=read(docKey,null);
+      doc=HubCore.normalize(stored||HubCore.snapshot(embedded,HubCore.sanitize(embedded,read(statusKey,{}))));
+      if(!stored)write(docKey,doc);
+      renderContent();saved();return;
     }
     session=read(sessionKey,null);
     if(!session){showLogin();return}
     setState('Wird geladen …');const epoch=authEpoch;
-    try{const next=await fetchCloud();if(epoch!==authEpoch)return;doc=next.document;overrides=next.status;renderContent();saved()}
+    try{const next=await fetchCloud();if(epoch!==authEpoch)return;adopt(next)}
     catch{showLogin('Verbindung prüfen und erneut anmelden.')}
   }
   setInterval(sync,15000);start();
